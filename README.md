@@ -33,7 +33,7 @@ cargo build --release
 ### Windows
 
 1. 下载 `jlv-windows-x86_64.zip`
-2. 解压后得到 `bin\jlv.exe`
+2. 解压后得到 `jlv.exe`
 3. 把 `jlv.exe` 放到你常用目录，例如：
 
 ```powershell
@@ -64,8 +64,8 @@ tar -xzf jlv-linux-x86_64.tar.gz
 3. 给执行权限并放到系统路径：
 
 ```bash
-chmod +x bin/jlv
-sudo mv bin/jlv /usr/local/bin/
+chmod +x jlv
+sudo mv jlv /usr/local/bin/
 ```
 
 4. 之后直接运行：
@@ -89,8 +89,8 @@ tar -xzf jlv-macos-aarch64.tar.gz
 给执行权限并放到系统路径：
 
 ```bash
-chmod +x bin/jlv
-sudo mv bin/jlv /usr/local/bin/
+chmod +x jlv
+sudo mv jlv /usr/local/bin/
 ```
 
 之后直接运行：
@@ -99,11 +99,6 @@ sudo mv bin/jlv /usr/local/bin/
 jlv head data.jsonl
 ```
 
-如果 macOS 首次提示“无法验证开发者”，可以在“系统设置 -> 隐私与安全性”里允许执行，或手动移除隔离属性：
-
-```bash
-xattr -d com.apple.quarantine jlv
-```
 
 ### 从源码构建
 

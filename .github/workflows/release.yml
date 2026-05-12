@@ -42,13 +42,13 @@ jobs:
       - name: Prepare archive
         shell: bash
         run: |
-          mkdir -p dist/package/bin
-          cp "target/release/${{ matrix.bin }}" "dist/package/bin/${{ matrix.executable_name }}"
+          mkdir -p dist/package
+          cp "target/release/${{ matrix.bin }}" "dist/package/${{ matrix.executable_name }}"
 
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            powershell -NoProfile -Command "Compress-Archive -Path 'dist/package/bin' -DestinationPath 'dist/${{ matrix.archive_name }}' -Force"
+            powershell -NoProfile -Command "Compress-Archive -Path 'dist/package/${{ matrix.executable_name }}' -DestinationPath 'dist/${{ matrix.archive_name }}' -Force"
           else
-            tar -czf "dist/${{ matrix.archive_name }}" -C dist/package bin
+            tar -czf "dist/${{ matrix.archive_name }}" -C dist/package "${{ matrix.executable_name }}"
           fi
 
       - name: Upload release asset
