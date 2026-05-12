@@ -1,0 +1,57 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            bin: jlv
+            executable_name: jlv
+            archive_name: jlv-linux-x86_64.tar.gz
+          - os: windows-latest
+            bin: jlv.exe
+            executable_name: jlv.exe
+            archive_name: jlv-windows-x86_64.zip
+          - os: macos-latest
+            bin: jlv
+            executable_name: jlv
+            archive_name: jlv-macos-aarch64.tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Test
+        run: cargo test --release
+
+      - name: Prepare archive
+        shell: bash
+        run: |
+          mkdir -p dist/package/bin
+          cp "target/release/${{ matrix.bin }}" "dist/package/bin/${{ matrix.executable_name }}"
+
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            powershell -NoProfile -Command "Compress-Archive -Path 'dist/package/bin' -DestinationPath 'dist/${{ matrix.archive_name }}' -Force"
+          else
+            tar -czf "dist/${{ matrix.archive_name }}" -C dist/package bin
+          fi
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v3
+        with:
+          files: dist/${{ matrix.archive_name }}

@@ -1,0 +1,43 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags-ignore:
+      - "v*"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            bin: jlv
+            artifact: jlv-linux-x86_64
+          - os: windows-latest
+            bin: jlv.exe
+            artifact: jlv-windows-x86_64
+          - os: macos-latest
+            bin: jlv
+            artifact: jlv-macos-aarch64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build
+        run: cargo build --release
+
+      - name: Test
+        run: cargo test --release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.artifact }}
+          path: target/release/${{ matrix.bin }}
