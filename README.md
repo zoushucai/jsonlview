@@ -32,9 +32,9 @@ cargo build --release
 
 ### Windows
 
-1. 下载 `jlv-windows-x86_64.exe`
-2. 重命名为 `jlv.exe`（可选）
-3. 放到你常用目录，例如：
+1. 下载 `jlv-windows-x86_64.zip`
+2. 解压后得到 `bin\jlv.exe`
+3. 把 `jlv.exe` 放到你常用目录，例如：
 
 ```powershell
 C:\Tools\jlv\jlv.exe
@@ -54,18 +54,18 @@ jlv head data.jsonl
 
 ### Linux (Ubuntu)
 
-1. 下载 `jlv-linux-x86_64`
-2. 给执行权限：
+1. 下载 `jlv-linux-x86_64.tar.gz`
+2. 解压：
 
 ```bash
-chmod +x jlv-linux-x86_64
+tar -xzf jlv-linux-x86_64.tar.gz
 ```
 
-3. 可选：重命名并放到系统路径：
+3. 给执行权限并放到系统路径：
 
 ```bash
-mv jlv-linux-x86_64 jlv
-sudo mv jlv /usr/local/bin/
+chmod +x bin/jlv
+sudo mv bin/jlv /usr/local/bin/
 ```
 
 4. 之后直接运行：
@@ -78,19 +78,19 @@ jlv head data.jsonl
 
 当前 release 提供 Apple Silicon 版本：
 
-- `jlv-macos-aarch64`
+- `jlv-macos-aarch64.tar.gz`
 
-给执行权限：
+解压：
 
 ```bash
-chmod +x jlv-macos-aarch64
+tar -xzf jlv-macos-aarch64.tar.gz
 ```
 
-可选：重命名并放到系统路径：
+给执行权限并放到系统路径：
 
 ```bash
-mv jlv-macos-aarch64 jlv
-sudo mv jlv /usr/local/bin/
+chmod +x bin/jlv
+sudo mv bin/jlv /usr/local/bin/
 ```
 
 之后直接运行：
